@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js"></script>
+  <script src="js/index.js"></script>
+  
+  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon/png" href="img/AppIcons/appstore.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Asap:ital@1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link rel="icon" type="image/png" href="img/AppIcons/appstore.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap" rel="stylesheet">
+    <title>ISP</title>
+  </head>
+<body>
+
+<div id="container" class="bg" style="visibility:hidden; height: 100%;" class="clearfix">
+    <a id="prev" class="prev" onclick="plusDivs(-1)">&#10094;</a>
+    <a class="next" onclick="plusDivs(1)">&#10095;</a>
+  <div class="categ">
+    <h2  id="cat"></h2>
+  </div>
+  <div id="question" >
+    <h2 id="question_name" class="mySlidesq1"></h2>
+  </div>
+    <form id="add-user-form" name="avis"><input type="text" name="autre_avis" placeholder="... إجابة أخرى" style="text-align: right;"></form>
+    <div class="emoji_container" id="e">
+      <div  class="emoji" id="em">
+        <img />  
+      </div>
+    </div>
+    <table class="tab">
+        <tr>
+          <td><button class="btn-emj" onclick="changeEmoji('tres satisfaisants')"> <img src="img/emoji/tres s.png" alt="" class="emoji_img"> </button></td>
+          <td><button class="btn-emj" onclick="changeEmoji('satisfaisants')"> <img src="img/emoji/s.png" alt="" class="emoji_img"> </button></td>
+          <td><button class="btn-emj" onclick="changeEmoji('moyennement satisfaisants')"> <img src="img/emoji/moyen s.png" alt="" class="emoji_img"> </button></td>
+          <td><button class="btn-emj" onclick="changeEmoji('peu satisfaisants')"> <img src="img/emoji/peu s.png" alt="" class="emoji_img"> </button></td>
+          <td><button class="btn-emj" onclick="changeEmoji('pas de tout satisfaisants')"> <img src="img/emoji/pas de tt s.png" alt="" class="emoji_img"> </button></td>
+       </tr>
+    </table> 
+</div>
+
+</body>
+<script>
+    var code=0;
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBwwiqscAkWI5u3lWeWCv25siIaU9ti-l8",
+      authDomain: "satisfaction-du-patient.firebaseapp.com",
+      databaseURL: "https://satisfaction-du-patient.firebaseio.com",
+      projectId: "satisfaction-du-patient",
+      storageBucket: "satisfaction-du-patient.appspot.com",
+      messagingSenderId: "82775390254",
+      appId: "1:82775390254:web:84a483da14f7aa26db47bf",
+      measurementId: "G-DK0TMQQXQ7" 
+};
+    
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+  const db=firebase.firestore();
+  function writeData(code){
+    r.setItems();
+    var d=new Date();
+    jj=d.getDate();mm=d.getMonth()+1;aaaa=d.getFullYear();
+    dt=jj+"-"+mm+"-"+aaaa;
+    db.collection('patients').doc(code).set({
+      code:code,
+      date:dt,
+    responses:r.getItems()
+  }).then(function() {
+    
+    alert("تم تسجيل الإجابات بنجاح");
+    window.location.href="./finish-ar.html";
+}).catch(function(error) {
+    console.error("Error writing document: ", error);
+});
+  }
+  function verifCode(code){ 
+      if(code==null){
+      window.location.href="lang.html";
+    }
+     else if(code.length!=4 || code==""){
+        alert("الرقم الخاص غير صحيح \n حاول مجددا");
+        entrerCode();
+      }
+    }
+    function getMat(cc){
+      verifCode(cc);
+      var docRef = db.collection("patients").doc(cc);
+      docRef.get().then(function(doc) {
+          if(doc.exists){
+            alert("لقد  قمت بالمشاركة مسبقا");
+            window.location.href="lang.html";
+          }else{
+            code=cc;
+            node = document.getElementById("container");
+		        node.style.visibility = "visible";
+            alert("مرحبا");
+          }
+      });
+    }
+    function entrerCode(){
+      var code=prompt("أدخل الرقم الخاص بك"); 
+      getMat(code);
+    }
+    
+    entrerCode();
+  </script>
+<script>
+    var i=0;
+    var text;
+    class Response{
+      constructor(categorie,question){
+        this.categorie=categorie;
+        this.question=question
+        this.emoji="#";
+        this.avis="";
+        this.rep={question:"",categorie:"",emoji:"",avis:""};
+      }
+      getEmoji(){
+        return this.emoji;
+      }
+      getAvis(){
+        return this.avis;
+      }
+      setEmoji(emj){
+        this.emoji=emj;
+      }
+      setAvis(av){
+        this.avis=av;
+      }
+      setCategorie(cat){
+        this.categorie=cat;
+      }
+      getCateogorie(){
+        return this.categorie;
+      }
+      setQuestion(quest){
+        this.question=quest;
+      }
+      getQuestion(){
+        return this.question;
+      }
+      setRep(){
+        this.rep.question=this.question;
+        this.rep.categorie=this.categorie;
+        this.rep.emoji=this.emoji;
+        this.rep.avis=this.avis;
+      }
+      getRep(){
+        return this.rep;
+      }
+    }
+  class Responses{
+    constructor(){
+      this.q1=new Response("Accessibilité","La facilité d’accès aux soins ?");
+      this.q2=new Response("Accessibilité","La disponibilité des soins nécessaires ?");
+      this.q3=new Response("Accessibilité","La possibilité d'obtenir un rendez-vous adéquate ?");
+      this.q4=new Response("Accueil","Votre accueil par les personnels au bureau des entrées a été ?");
+      this.q5=new Response("Accueil","Estimez-vous que la présentation de votre chambre et du service ?");
+      this.q6=new Response("Organisation de service","Selon vous la collaboration entre les personnels semble ?");
+      this.q7=new Response("Organisation de service","La coordination entre les services parait ?");
+      this.q8=new Response("Temps de réaction et prise en charge","La rapidité de la réponse, lorsque vous faites appel au soignant en cas de besoin, était ?");
+      this.q9=new Response("Temps de réaction et prise en charge","La qualité de la prise en charge soignante ?");
+      this.q10=new Response("Méthode de traitement","Que pensez-vous des compétences de l’équipe soignant ? * Du médecin");
+      this.q11=new Response("Méthode de traitement","Que pensez-vous des compétences de l’équipe soignant ? * Des infirmiers et des techniciens");
+      this.q12=new Response("Méthode de traitement","Que pensez-vous des compétences de l’équipe soignant ? * Des autres personnels");
+      this.q13=new Response("Les attitudes des personnels soignants","Comment jugez-vous la crédibilité des personnels soignants ?");
+      this.q14=new Response("Les attitudes des personnels soignants","Le respect de vos droits (personnalité dignité, intimité...) ?");
+      this.q15=new Response("Fiabilité des soins","Selon vous l’efficacité des soins est ?");
+      this.q16=new Response("Information médicale","L’information concernant votre hospitalisation ?");
+      this.q17=new Response("Information médicale","L’explication par le soignant de votre maladie votre médication les signes d’alerte les examens était ?");
+      this.q18=new Response("Respect des règles d’hygiène","Comment appréciez-vous les conditions hygiéniques ?");
+      this.q19=new Response("Respect des règles d’hygiène","A votre avis, le respect de l’asepsie par les personnels de santé est :");
+      this.q20=new Response("Prestation hôtelière","Que pensez-vous de la literie ?");
+      this.q21=new Response("Prestation hôtelière","Comment trouvez-vous la restauration ?");
+      this.q22=new Response("Prestation hôtelière","A votre avis, l’infrastructure est");
+      this.q23=new Response("Sécurité","Estimez-vous avoir été soigné en toute sécurité");
+      this.q24=new Response("Frais d’hospitalisation et le remboursement","Le cout de votre séjour parait-il");
+      this.q25=new Response("Frais d’hospitalisation et le remboursement","D’après vous, le système de paiement est ");
+      this.resp=[this.q1,this.q2,this.q3,this.q4,this.q5,this.q6,this.q7,this.q8,this.q9,this.q10,this.q11,this.q12,this.q13,this.q14,this.q15,this.q16,this.q17,this.q18,this.q18,this.q20,this.q21,this.q22,this.q23,this.q24,this.q25];
+      this.items={};
+    }
+    getItems(){
+      return this.items;
+    }
+    setItems(){
+      for(i;i<25;i++){
+        this.resp[i].setRep();
+        this.items[i]=this.resp[i].getRep();
+      }
+    }
+  }
+  var r=new Responses();
+  </script>
+  <script>
+    var slideIndex = 1;
+    var index=0;
+    var cpt=1;
+    var tab=[3,2,2,2,3,2,1,2,2,3,1,2];
+    var images=["url('img/acessibilite.jpg')","url('img/accueil.jpg')","url('img/organisationduservice.jpg')","url('img/tempsdereactionetpriseencharge.jpg')","url('img/methodedetraitance.jpg')","url('img/attitudesdespesonnels.jpg')","url('img/fiabilitedessoins.jpg')","url('img/informationmedicale.jpg')","url('img/respectdesreglesdhygiene.jpg')","url('img/prestationhotelier.png')","url('img/securite.jpg')","url('img/Paiementenlignecommentcamarche.png')"];
+    var emojis={"tres satisfaisants":"img/emoji/tres s.png","satisfaisants":"img/emoji/s.png","moyennement satisfaisants":"img/emoji/moyen s.png","peu satisfaisants":"img/emoji/peu s.png","pas de tout satisfaisants":"img/emoji/pas de tt s.png"};
+   
+   categories=["إمكانية الوصول","الاستقبال","نظام الوحدة الصحية","سرعة الرد و الاستجابة","الأساليب المهنية","أخلاقيات أعوان الصحة","نجاعة العلاج","المعلومات الطبية","احترام قواعد حفظ الصحة","خدمات الإقامة","الإجراءات الأمنية","تكاليف العلاج"];
+   questions=["كيف تقيم سهولة الوصول للعلاج","توفر الرعاية الصحية اللازمة","إمكانية الحصول علي مواعيد ملائمة","ما هو رأيك في استقبال أعوان الصحة","تهيئة الغرفة و الوحدة الصحية","كيف تقيم التعاون بين الوحدات الصحية","كيف بدا لك التنسيق بين الوحدات الصحية","سرعة الاستجابة عند الاستدعاء","جودة الرعاية الصحية","ما رأيك في مهارات فريق التمريض :  الطبيب","    ما رأيك في مهارات فريق التمريض :الممرضين وتقنيي الصحة","ما رأيك في مهارات فريق التمريض : بقية أعوان الصحة","كيف تقيم مصداقية فريق التمريض؟","(كيف وجدت احترام فريق التمريض لحقوقك ( شخصية كرامة خصوصية","ما مدى فعالية الخدمات الصحية؟","هل تم إعلامك بكل ما يخص الإقامة بالمستشفى؟","كيف تقيم شرح أعوان الصحة لمرضك العلاج علامات الخطورة و الاختبارات","كيف تقيم ظروف حفظ الصحة؟","كيف وجدت احترام قواعد التعقيم من قبل أعوان الصحة؟","ما رأيك في تجهيز الأسرة؟","هل أعجبتك جودةالطعام؟","كيف تقيم البنية التحتية؟","هل تعتبر انه قد تم علاجك في ظروف أمنة؟","هل أنت راضي عن تكلفة الإقامة في المستشفى؟","كيف وجدت نظام التسديد؟"]; 
+
+
+    document.getElementById("prev").style.visibility="hidden";
+    document.getElementById("question_name").innerHTML = questions[slideIndex-1];
+    document.getElementById("cat").innerHTML = categories[index];
+    document.getElementById("container").style.backgroundImage =images[index];
+  
+    function plusDivs(n) { 
+      if(n==1){
+          if(r.resp[slideIndex-1].getEmoji()!="#"){
+        avoirAvis();
+      if((index==tab.length-1)&&(cpt==tab[index])){
+        if(navigator.onLine) {
+          if(confirm("هل أنت متأكد من الإجابات؟")){
+          writeData(code);
+        }
+      }else{
+        alert('تحقق من شبكة الانترنت من فضلك');
+      }
+      }
+      else if((index<tab.length)){
+        document.getElementById("prev").style.visibility="visible";
+        slideIndex+=n;
+        showDivs(slideIndex);
+        showAvis();
+        cpt++;
+        if(cpt>tab[index]){
+          index++;
+          cpt=1;  
+          document.getElementById("container").style.backgroundImage =images[index];
+          document.getElementById("cat").innerHTML = categories[index];
+        }
+      }
+  }else{
+      alert("الرجاء المشاركة في هذا السؤال");
+  }
+    }
+      if(n==-1){
+        if(slideIndex>1){
+          avoirAvis();
+          showDivs(slideIndex += n);
+          showAvis();
+        if((index>=0) && (cpt>1)){
+          cpt--;
+        }
+        else if((index>0)&&(cpt<=1)){
+          index--;
+          cpt=tab[index];
+          document.getElementById("container").style.backgroundImage =images[index];
+          document.getElementById("cat").innerHTML = categories[index];
+        }   
+      } 
+    }
+  }
+    function showDivs(n) {
+      showEmoji();
+      document.getElementById("question_name").innerHTML = questions[n-1];
+    }
+   
+    function changeEmoji(img){
+      var c=document.getElementById("em").childNodes[0];
+      var image = document.createElement("img");
+      image.src = emojis[img];
+      image.setAttribute("style", "width:60px;height:60px;transform: translate(-3%, -3%);");
+      image.setAttribute("id","reaction");
+      var block=document.getElementById("em");
+      block.replaceChild(image,c);
+      r.resp[slideIndex-1].setEmoji(img); 
+    }
+    function showEmoji(){
+      
+        var img=r.resp[slideIndex-1].getEmoji();
+        if(img=="#"){
+          var elmnt = document.createElement("img");
+          var c=document.getElementById("em").childNodes[0];
+          var block=document.getElementById("em");
+          block.replaceChild(elmnt,c);
+        }else{
+          var c=document.getElementById("em").childNodes[0];
+          var image = document.createElement("img");
+          image.src = emojis[img];
+          image.setAttribute("style", "width:60px;height:60px;transform: translate(-3%, -3%);");
+          image.setAttribute("id","reaction");
+          var block=document.getElementById("em");
+          block.replaceChild(image,c);
+        }
+    }
+    function avoirAvis(){
+      avis=document.avis.autre_avis.value;
+      r.resp[slideIndex-1].setAvis(avis);
+    }
+    function showAvis(){
+      avis=r.resp[slideIndex-1].getAvis();
+      document.avis.autre_avis.value=avis;
+    }
+    </script>
+</html>

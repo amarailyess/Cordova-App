@@ -1,0 +1,364 @@
+body,h1 {font-family: "Raleway", sans-serif}
+        body, html {height: 100%}
+        .bg {
+            /*background-image: url('img/iiiiiii.jpg');*/
+            height: 100vh; 
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+.categ{
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Next & previous buttons */
+
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    z-index: 2;
+    text-decoration: none;
+    background-color: rgba(0,0,0,0.8);
+   
+  }
+  
+  /* Position the "next button" to the right */
+  .next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+  }
+  
+  /* On hover, add a black background color with a little bit see-through */
+  .prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+  }
+  
+  
+  
+  /* Fading animation */
+  .fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1.5s;
+    animation-name: fade;
+    animation-duration: 1.5s;
+  }
+  
+  @-webkit-keyframes fade {
+    from {opacity: .4} 
+    to {opacity: 1}
+  }
+  
+  @keyframes fade {
+    from {opacity: .4} 
+    to {opacity: 1}
+  }
+  
+  /* On smaller screens, decrease text size */
+  @media only screen and (max-width: 500px) {
+    .prev, .next{font-size: 11px;
+        position: absolute;
+        top: 93%;        
+    }
+  }
+
+button{
+    background: none;
+    color: white;
+}
+
+.mySlides {display:none;
+}
+
+#categorie{
+ 
+   background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0, 0.4); 
+  color: white;
+  font-weight: bold;
+  /*border: 3px solid #f1f1f1;*/
+  border-radius: 5px;
+  position: absolute;
+  top: 10%;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: auto;
+ 
+  padding: 10px;
+  text-align: center;
+
+}
+#categorie_name{
+    display: none;
+    font-family: 'Oswald', sans-serif;
+    
+}
+button{
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    background: none;
+    border:none;
+    font-size: 24px;
+    margin-right: 2%;
+}
+
+#question{
+  background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height:40vh;
+  width: 100%;
+  z-index: 0;
+  padding-top: 2%;
+  
+
+}
+/*#question_name{
+    
+    font-family: 'Oswald', sans-serif;
+}*/
+form[name="avis"]{
+    position: absolute;
+        top: 80%;
+        left: 48%;
+    
+}
+form[name="avis"] input{
+    float: left;
+    width:50vw;
+    margin: 0;
+    border: 0;
+    border-bottom: 1px solid #eee;
+    margin: 0 1%;
+    padding: 10px;
+    display: block;
+    box-sizing: border-box;
+    font-size: 18px;
+    border-radius: 10px;
+    border: 1px solid #13c965;
+}
+
+form input:focus{
+    outline: none;
+    border-bottom: 3px solid #88236f;
+    padding-bottom: 8px;
+    transition: all ease 0.2s;
+}
+.emoji_container{
+    position: absolute;
+    top: 80%;
+    left: 15%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background-color: rgba(85, 84, 84,.5);
+    width: 70px;
+    height: 70px;
+}
+
+.emoji{
+    
+    border-radius: 50%;
+    background-color: white;
+    width: 80%;
+    height: 80%;
+    transform: translate(12%, 12%);
+}
+.code{
+    position: relative;
+    left: 460px;
+    top: -350px;
+    height: 85px;
+    width: 85px;
+    border-radius: 100%;
+    padding-left: 10px;
+    font-size: 34px;
+    font-weight: bold;
+    text-align: center;
+    
+}
+.code1{
+    position: relative;
+    left: 468px;
+}
+
+.button {
+    border-radius: 4px;
+    background-color: #0cdada;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 50px;
+    padding: 20px;
+    width: 250px;
+    height: 100px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+    position: relative;
+    top: -420px;
+    left: 570px;
+  }
+  
+  .button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+  
+  .button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+  
+  .button:hover span {
+    padding-right: 25px;
+  }
+  
+  .button:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+.button:hover{
+    opacity: 0.8;
+}
+.fr{
+    position: relative;
+    top: -280px;
+    left: 305px;
+}
+
+.emoji_img{
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    transition: 0.3s;
+    
+}
+.emoji_img:hover{
+    width: 70px;
+    height: 70px;
+}
+.btn-imj{
+    margin-right: 20px;
+}
+table{
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+    margin-top: 5vw;
+    margin-left: 30%;
+    border-spacing: 20px 0px;
+    
+    
+    
+}
+@keyframes masuperanimation {
+    0% {
+        /*transform: translateX(-2px);*/
+        transform: translateY(-20px);
+    }
+
+    50% {
+      
+        transform: translateY(-50px);
+    }
+
+    100% {
+        
+        transform: translateY(-70px);
+    }
+}
+.emj{
+    visibility: hidden;
+    
+}
+.emoji_img:active{
+    animation: masuperanimation 3s;
+
+}
+@media screen and (max-width:900px) {
+    table{
+        position: absolute;
+        top: 55%;
+    }
+    
+    
+}
+@media screen and (max-width:600px) {
+    
+    #question_name{
+        font-size: 28px;
+    }
+    
+}
+@media screen and (max-width:500px) and (min-width:400px)  {
+    table{
+        position: absolute;
+        top: 57%;
+    }
+    #question_name{
+        font-size: 24px;
+    }
+    
+}
+@media screen and (max-width:450px) {
+    table{
+        position: absolute;
+        top: 60%;
+    }
+    #question_name{
+        font-size: 28px;
+    }
+    
+}
+@media screen and (max-height:450px) {
+    table{
+        position: absolute;
+        top: 55%;
+    }
+    #question_name{
+        font-size: 26px;
+    }
+    #question{
+        height: 50vh;
+    }
+    .emoji_container{
+       
+        position: absolute;
+        top: 90%;
+    }
+    
+}
+
+
+
+
+
+
